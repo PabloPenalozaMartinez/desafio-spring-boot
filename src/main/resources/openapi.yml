@@ -1,0 +1,151 @@
+openapi: 3.0.4
+info:
+  title: Gestion de Tareas
+  description: |-
+    API de gestión de tareas para mejorar la productividad de sus equipos.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: tarea
+    description: Operaciones de tareas 
+paths:
+  /token/{nombreUsuario}:
+    get:
+      tags:
+        - token
+      summary: Genera el token
+      description: Devuelve el token de seguridad
+      operationId: obtenerToken
+      parameters:
+        - name: nombreUsuario
+          in: path
+          description: nombre del usuario (Sub) con el que va a ser generado el token
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: operacion exitosa
+          content:
+            application/json:
+              schema:
+                type: string
+  /tareas:
+    get:
+      tags:
+        - tarea
+      summary: Busca todas las tareas
+      description: Busca todas las tareas
+      operationId: obtenerTareas
+      responses:
+        '200':
+          description: operacion exitosa
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tarea'
+    post:
+      tags:
+        - tarea
+      summary: Guarda una tarea
+      description: Almacena la tarea
+      operationId: crearTarea
+      requestBody:
+        description: Tarea que se desea almacenar
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tarea'
+        required: true
+      responses:
+        '201':
+          description: operacion exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tarea'
+        '400':
+          description: Valor invalido
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      tags:
+        - tarea
+      summary: Modifica una tarea existente
+      description: Modifica una tarea existente por Id.
+      operationId: actualizarTarea
+      requestBody:
+        description: Modifica una tarea existente
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tarea'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tarea'
+        '400':
+          description: Valor invalido
+        default:
+          description: Valor invalido
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /tareas/{tareaId}:
+    delete:
+      tags:
+        - tarea
+      summary: Borra una tarea 
+      description: Borra una tarea
+      operationId: eliminarTarea
+      parameters:
+        - name: tareaId
+          in: path
+          description: Id de la tarea a eliminar
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Tarea borrada
+        default:
+          description: Error inesperado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+components:
+  schemas:
+    Tarea:
+      type: object
+      properties:
+        id:
+          type: number
+        descripcion:
+          type: string
+        idEstado:
+          type: number
+    ErrorResponse:
+      type: object
+      properties:
+        codigoEstatus:
+          type: number
+        mensaje:
+          type: string
+  requestBodies:
+    Tarea:
+      description: Tarea que va a ser guardada
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Tarea'

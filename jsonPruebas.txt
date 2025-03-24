@@ -1,0 +1,37 @@
+
+1.- Primero levantar el servicio
+
+2.- Con el POSTMAN pegarle a este GET: http://localhost:8080/token/agonzalez
+	Para que te devuelva el token con el usuario que se especifico en la URL
+
+3.- Con el POSTMAN pegarle a este POST: http://localhost:8080/tareas
+	Hay que agregar el Token, obtenido anteriormente, en Authorization para que viaje en el header de la peticion
+	Agregar en el body este json con la informacion necesaria para crear el registro de la tarea:
+	
+	{
+	    "descripcion": "Ordenar",
+	    "idEstado": 1
+	}
+
+4.- Con el POSTMAN pegarle a este PUT: http://localhost:8080/tareas
+	Hay que agregar el Token en Authorization para que viaje en el header de la peticion
+	Agregar en el body este json con la informacion necesaria para modificar el registro de la tarea:
+
+	{
+	    "id": 1,
+	    "descripcion": "Cerrar",
+	    "idEstado": 2
+	}
+
+5.- Con el POSTMAN pegarle a este PUT: http://localhost:8080/tareas
+	Hay que agregar el Token en Authorization para que viaje en el header de la peticion
+	Agregar en el body este json con la informacion necesaria para eleiminar el registro de la tarea:
+
+	{
+	    "id": 1,
+	    "descripcion": "Cerrar",
+	    "idEstado": 2
+	}
+	
+6.- Con el POSTMAN pegarle a este DELETE: http://localhost:8080/tareas/10000
+	Hay que agregar el Token en Authorization para que viaje en el header de la peticion
